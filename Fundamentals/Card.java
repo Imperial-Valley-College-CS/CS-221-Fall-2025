@@ -2,38 +2,43 @@ public class Card
 {
    public static void main(String[] args)
    {
-      String symbol = "7c".toLowerCase();
+      String symbol = "10s".toLowerCase();    //scan symbol from user
       int lastIndex = symbol.length()-1;
       
       //create two variables by splitting symbol into rank and suit
       char rank = symbol.charAt(0);
-      char suit = symbol.charAt(lastIndex);      
+      char suit = symbol.charAt(lastIndex);   
+      
+      String rankP = "";
+      String suitP = "";   
       
       //create a switch for ranks
       switch( rank )
       {
-         case '2': System.out.print("Two of "); break;
-         case '3': System.out.print("Three of "); break;
-         case '4': System.out.print("Four of "); break;
-         case '5': System.out.print("Five of "); break;
-         case '6': System.out.print("Six of "); break;
-         case '7': System.out.print("Seven of "); break;
-         case '8': System.out.print("Eight of "); break;
-         case '9': System.out.print("Nine of "); break;
-         case '1': System.out.print("Ten of "); break;
-         case 'j': System.out.print("Jack of "); break;
-         case 'q': System.out.print("Queen of "); break;
-         case 'k': System.out.print("King of "); break;
-         case 'a': System.out.print("Ace of "); break;
+         case '2': rankP = "Two of "; break;
+         case '3': rankP = "Three of "; break;
+         case '4': rankP = "Four of "; break;
+         case '5': rankP = "Five of "; break;
+         case '6': rankP = "Six of "; break;
+         case '7': rankP = "Seven of "; break;
+         case '8': rankP = "Eight of "; break;
+         case '9': rankP = "Nine of "; break;
+         case '1': rankP = "Ten of "; break;
+         case 'j': rankP = "Jack of "; break;
+         case 'q': rankP = "Queen of "; break;
+         case 'k': rankP = "King of "; break;
+         case 'a': rankP = "Ace of "; break;
       }
       
       //create a switch for suits
       switch( suit )
       {
-         case 'c': System.out.println( "Clubs" ); break;
-         case 'd': System.out.println( "Diamonds" ); break;
-         case 'h': System.out.println( "Hearts" ); break;
-         case 's': System.out.println( "Spades" ); break;
+         case 'c': suitP = "Clubs" ; break;
+         case 'd': suitP = "Diamonds"; break;
+         case 'h': suitP = "Hearts"; break;
+         case 's': suitP = "Spades"; break;
       }
+      
+      System.out.println( rankP + suitP );
    }
 }
