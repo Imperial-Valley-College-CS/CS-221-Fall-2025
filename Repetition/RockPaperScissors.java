@@ -6,6 +6,9 @@ public class RockPaperScissors
    {
       Scanner scan = new Scanner(System.in);
       String answer;
+      int userScore = 0;
+      int compScore = 0;
+      
       do
       {
          //1-rock, 2-paper, 3-scissors
@@ -21,12 +24,14 @@ public class RockPaperScissors
                    (compHand == 3 && userHand == 2) )
          {
             System.out.println( "Computer wins!" );
+            compScore++;
             
          }else if( (userHand == 1 && compHand == 3) || 
                    (userHand == 2 && compHand == 1) || 
                    (userHand == 3 && compHand == 2) )
          {
             System.out.println( "You WIN!" );
+            userScore++;
          }
          
          switch( compHand )
@@ -44,8 +49,12 @@ public class RockPaperScissors
          
          System.out.print("Do you want to play again? (yes/no) ");
          answer = scan.next();
-         
+                  
       }while( answer.equals("yes") );
+      
+      System.out.println( "Thanks for playing :)" );
+      System.out.println( "User Score: " + userScore );
+      System.out.println( "Computer Score: " + compScore );
       
    }//end main method
 }//end class
