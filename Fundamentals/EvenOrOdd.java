@@ -9,9 +9,7 @@ public class EvenOrOdd
       System.out.print("Enter a number: " );
       int num = scan.nextInt();
       
-      int rem = num%2;
-      
-      if( rem == 0 )
+      if( num%2 == 0 )
          System.out.println("Number is even.");
       else
          System.out.println("Number is odd.");
