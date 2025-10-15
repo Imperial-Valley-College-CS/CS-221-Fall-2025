@@ -69,4 +69,9 @@ public class Card
    {
       return this.value - cardX.getValue();
    }
+   
+   public String toString()
+   {
+      return "Card: " + this.card + "\n" + "Value: " + this.value;
+   }
 }
