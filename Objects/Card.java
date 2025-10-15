@@ -2,37 +2,33 @@ import javafx.scene.image.Image;
 
 public class Card
 {
-   //data fields (static or instance variables)
+   //data fields (static variables and instance variables)
    private String rank, suit, card;
    private int value;
    private Image image;
    //constructors
    public Card(String symbol)
    {
-      setCard(symbol);
-      setValue();
+       setCard(symbol);
    }
    //methods
-   private void setCard(String s)
+   private void setCard(String simba)
    {
-      //initializes rank, suit and card
-      int len = s.length();
-      this.rank = s.substring(0,len-1);
-      this.suit = s.substring(len-1);
+      //set value of rank, suit and card
+      int len = simba.length();
+      this.rank = simba.toUpperCase().substring(0, len-1); 
+      this.suit = simba.toUpperCase().substring(len-1);
       
-      switch( this.rank )
+      switch(this.rank)
       {
-         case "2": this.card = "Two of "; break;
-         case "3": this.card = "Three of "; break;
          case "10": this.card = "Ten of "; break;
+         case "J": this.card = "Jack of "; break;
       }
-      switch( this.suit )
+      
+      switch(this.suit)
       {
          case "D": this.card += "Diamonds"; break;
+         case "H": this.card += "Hearts"; break;
       }
-   }
-   private void setValue()
-   {
-      //initialize value
    }
 }
