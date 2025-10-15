@@ -10,7 +10,15 @@ public class Card
    public Card(String symbol)
    {
        setCard(symbol);
+       setValue();
    }
+   
+   public Card(String symbol, int val)
+   {
+       setCard(symbol);
+       this.value = val;
+   }
+   
    //methods
    private void setCard(String simba)
    {
@@ -29,6 +37,15 @@ public class Card
       {
          case "D": this.card += "Diamonds"; break;
          case "H": this.card += "Hearts"; break;
+      }
+   }
+   
+   private void setValue()
+   {
+      switch( this.rank )
+      {
+         case "2": this.value = 2; break;
+         case "3": this.value = 3; break;
       }
    }
 }
