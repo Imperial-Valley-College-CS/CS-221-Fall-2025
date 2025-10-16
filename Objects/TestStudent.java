@@ -11,5 +11,7 @@ public class TestStudent
       john.setGrades( grades );
       double gpa = john.getGPA();
       System.out.println( gpa );
+      System.out.println( john );
+      System.out.println( britt );
    }
 }

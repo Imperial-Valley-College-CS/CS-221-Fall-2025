@@ -55,17 +55,28 @@ public class Student
    
    private void calcGPA()
    {
-      double sum = 0;
-      for( char x : this.grades )
+      if( this.grades == null )
+         this.gpa = 0;
+      else
       {
-         switch( x )
+         double sum = 0;
+         for( char x : this.grades )
          {
-            case 'A': case 'a': sum += 4.0; break;
-            case 'B': case 'b': sum += 3.0; break;
-            case 'C': case 'c': sum += 2.0; break;
-            case 'D': case 'd': sum += 1.0; break;
+            switch( x )
+            {
+               case 'A': case 'a': sum += 4.0; break;
+               case 'B': case 'b': sum += 3.0; break;
+               case 'C': case 'c': sum += 2.0; break;
+               case 'D': case 'd': sum += 1.0; break;
+            }
          }
+         this.gpa = sum/this.grades.length;
       }
-      this.gpa = sum/this.grades.length;
+   }
+   
+   @Override
+   public String toString()
+   {
+      return "Name: " + this.name + "\nAge: " + getAge() + "\nGPA: " + getGPA();
    }
 }

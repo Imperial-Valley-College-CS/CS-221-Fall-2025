@@ -7,17 +7,18 @@ public class Card
    private int value;
    private Image image;
    //constructors
+   public Card(String symbol, int val)
+   {
+       setCard(symbol);
+       this.value = val;
+   }
+   
    public Card(String symbol)
    {
        setCard(symbol);
        setValue();
    }
    
-   public Card(String symbol, int val)
-   {
-       setCard(symbol);
-       this.value = val;
-   }
    
    //methods
    public int getValue()
