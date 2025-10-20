@@ -10,7 +10,7 @@ public class Playlist
       try
       {
          Scanner scan = new Scanner(f);
-         System.out.println( scan.nextLine() );
+         System.out.println( scan.nextInt() );
       }catch( FileNotFoundException e )
       {
          System.out.println(  "file not found" );
