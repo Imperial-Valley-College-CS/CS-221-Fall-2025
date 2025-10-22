@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class Invader
 {
@@ -24,8 +23,11 @@ public class Invader
       try
       {
          Scanner scan = new Scanner(f);
-         String line = scan.nextLine();
-         System.out.println( line );
+         for( int i = 0; i < body.length; i++ )
+         {
+            String line = scan.nextLine();
+            System.out.println( line );
+         }
       }catch(FileNotFoundException e)
       {
          System.out.println( filename + " not found." );
