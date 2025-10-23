@@ -34,6 +34,7 @@ public class Invader
                else
                   this.body[i][j] = false;
             }
+            System.out.println( line );
          }
       }catch(FileNotFoundException e)
       {
