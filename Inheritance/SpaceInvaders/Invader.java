@@ -15,7 +15,6 @@ public class Invader
    public Invader( int xx, int yy )
    {
       this.position = new Position(xx, yy);
-      //setBody();
    }
    
    protected void setBody()
@@ -26,8 +25,15 @@ public class Invader
          Scanner scan = new Scanner(f);
          for( int i = 0; i < body.length; i++ )
          {
-            String line = scan.nextLine();
-            System.out.println( line );
+            String line = scan.nextLine();      //"0,0,1,0,0,0,...."
+            String[] tokens = line.split(",");
+            for( int j = 0; j < tokens.length; j++ )
+            {
+               if( tokens[j].equals("1") )
+                  this.body[i][j] = true;
+               else
+                  this.body[i][j] = false;
+            }
          }
       }catch(FileNotFoundException e)
       {
