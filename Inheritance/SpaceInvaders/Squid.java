@@ -9,8 +9,7 @@ public class Squid extends Invader
       //needs to be first line of code in this constructor
       super(xx,yy);     //invokes constructor of super class
       super.health = squidFiles.length;
-      int index = squidFiles.length-super.health;
-      super.filename = super.matDir + squidFiles[index];
+      super.filename = super.matDir + squidFiles[0];
       setBody();
    } 
 }
