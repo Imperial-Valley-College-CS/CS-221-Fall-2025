@@ -5,16 +5,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 
-public class App extends Application
+public class AppMouse extends Application
 {
-   Group g = new Group();
-   Scene seen = new Scene(g);
+   Group g = new Group();           //A Group is a Parent
+   Scene seen = new Scene(g);       //doesn't have a zero-arg constructor
    KeyHandler handleKey = new KeyHandler();
    
    @Override
    public void start(Stage sage)
    {
-      seen.setOnKeyPressed(handleKey);
+      seen.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
       sage.setScene(seen);
       sage.show();
    }
@@ -24,7 +24,11 @@ public class App extends Application
       @Override
       public void handle(KeyEvent e)
       {
-         System.out.println( e.getText() );
+         String key = e.getCode().toString();
+         
+         if( key.equals("ESCAPE") )
+            System.exit(0);
+         
       }
    }
 }
