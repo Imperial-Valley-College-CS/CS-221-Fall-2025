@@ -1,7 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 
@@ -9,26 +9,26 @@ public class AppMouse extends Application
 {
    Group g = new Group();           //A Group is a Parent
    Scene seen = new Scene(g);       //doesn't have a zero-arg constructor
-   KeyHandler handleKey = new KeyHandler();
+   MouseHandler handleMouse = new MouseHandler();
    
    @Override
    public void start(Stage sage)
    {
-      seen.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
+      seen.setOnMouseClicked(handleMouse);    //makes mouse come to life, needs an EventHandler
       sage.setScene(seen);
       sage.show();
    }
    
-   class KeyHandler implements EventHandler<KeyEvent>
+   class MouseHandler implements EventHandler<MouseEvent>
    {
       @Override
-      public void handle(KeyEvent e)
+      public void handle(MouseEvent e)
       {
-         String key = e.getCode().toString();
+         double x = e.getX();
+         double y = e.getY();
          
-         if( key.equals("ESCAPE") )
-            System.exit(0);
-         
+         if( x > 200 && y > 200 )
+            System.exit(0);         
       }
    }
 }
