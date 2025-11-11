@@ -1,4 +1,5 @@
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 
 public class Constants
 {
@@ -6,5 +7,6 @@ public class Constants
    public static double CANVAS_WID = 600;
    public static Color BKGR_COLOR = Color.BLACK;
    public static Color SNAKE_COLOR = Color.WHITE;
-   public static double SNAKE_SIZE = 20;
+   public static double SNAKE_SIZE = 60;
+   public static Image pikachu = new Image("pikachu.png",true);
 }

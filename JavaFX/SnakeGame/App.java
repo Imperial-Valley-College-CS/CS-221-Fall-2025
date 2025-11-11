@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.image.Image;
 
 public class App extends Application
 {
@@ -59,7 +60,8 @@ public class App extends Application
       gc.fillRect(0, 0, Constants.CANVAS_WID, Constants.CANVAS_HEI);
       
       gc.setFill(Constants.SNAKE_COLOR);
-      gc.fillRect(posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      gc.drawImage(Constants.pikachu, posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      //gc.fillRect(posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
    }
    
    class Timer extends AnimationTimer
