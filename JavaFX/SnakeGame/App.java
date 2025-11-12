@@ -28,8 +28,8 @@ public class App extends Application
    @Override
    public void start(Stage stage)
    {
-      timer.start();             //handle method starts being invoked
-      scene.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
+      timer.start();                         //handle method in Timer starts being invoked
+      scene.setOnKeyPressed(handleKey);      //makes keyboard come to life, needs an EventHandler
       stage.setScene(scene);      
       stage.show();
    }

@@ -7,16 +7,16 @@ import javafx.scene.Group;
 
 public class AppKeyboard extends Application
 {
-   Group g = new Group();           //A Group is a Parent
-   Scene seen = new Scene(g);       //doesn't have a zero-arg constructor
+   Group g = new Group();              //A Group is a Parent
+   Scene scene = new Scene(g);         //doesn't have a zero-arg constructor
    KeyHandler handleKey = new KeyHandler();
    
    @Override
-   public void start(Stage sage)
+   public void start(Stage stage)
    {
-      seen.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
-      sage.setScene(seen);
-      sage.show();
+      scene.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
+      stage.setScene(scene);
+      stage.show();
    }
    
    class KeyHandler implements EventHandler<KeyEvent>
