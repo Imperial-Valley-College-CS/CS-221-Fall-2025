@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.image.Image;
+import java.util.ArrayList;
 
 public class App extends Application
 {
@@ -23,45 +24,78 @@ public class App extends Application
    double posX = 100;
    double posY = 100;
    String key = "";
-   
+   ArrayList<Block> snake = new ArrayList<>();   
+   Block apple;
    
    @Override
    public void start(Stage stage)
    {
       timer.start();                         //handle method in Timer starts being invoked
+      initializeSnake();
+      updateApple();
       scene.setOnKeyPressed(handleKey);      //makes keyboard come to life, needs an EventHandler
       stage.setScene(scene);      
       stage.show();
    }
    
-   public void direction()
+   public void updateApple()
    {
-      switch( key )
-      {
-         case "UP": posY -= Constants.SNAKE_SIZE; break;
-         case "DOWN": posY += Constants.SNAKE_SIZE; break;
-         case "LEFT": posX -= Constants.SNAKE_SIZE; break;
-         case "RIGHT": posX += Constants.SNAKE_SIZE; break;
-      }
-      
-      if( posX > Constants.CANVAS_WID )
-         posX = 0;
-      if( posY > Constants.CANVAS_HEI )
-         posY = 0;
-      if( posX < 0 )
-         posX = Constants.CANVAS_WID;
-      if( posY < 0 )
-         posY = Constants.CANVAS_HEI;
+      double randX = (int)((Constants.CANVAS_WID/Constants.SNAKE_SIZE)*Math.random())*Constants.SNAKE_SIZE;
+      double randY = (int)((Constants.CANVAS_HEI/Constants.SNAKE_SIZE)*Math.random())*Constants.SNAKE_SIZE;
+      apple = new Block(randX, randY);
+      System.out.println( randX + ", " + randY );
    }
    
-   public void moveSquare()
+   public void initializeSnake()
+   {
+      snake.add( new Block(posX, posY) );
+      snake.add( new Block(posX-Constants.SNAKE_SIZE, posY) );
+      snake.add( new Block(posX-2*Constants.SNAKE_SIZE, posY) );
+   }
+   
+   public void updateSnake()
+   {
+      Block head = snake.get(0);
+      double newX = head.getX();
+      double newY = head.getY();
+      switch( key )
+      {
+         case "UP": newY -= Constants.SNAKE_SIZE; break;
+         case "DOWN": newY += Constants.SNAKE_SIZE; break;
+         case "LEFT": newX -= Constants.SNAKE_SIZE; break;
+         case "RIGHT": newX += Constants.SNAKE_SIZE; break;
+      }
+      
+      Block newHead = new Block(newX, newY);
+      snake.add(0, newHead);                 //add new head
+      
+      if( ateApple() )
+         updateApple();
+      else
+         snake.remove( snake.size()-1 );        //remove tail
+   }
+   
+   public boolean ateApple()
+   {
+      Block head = snake.get(0);
+      if( head.getX() == apple.getX() && head.getY() == apple.getY() )
+         return true;
+      return false;
+   }
+   
+   public void paintSnake()
    {   
       gc.setFill(Constants.BKGR_COLOR);
       gc.fillRect(0, 0, Constants.CANVAS_WID, Constants.CANVAS_HEI);
       
+      gc.setFill(Constants.APPLE_COLOR);
+      gc.fillRect( apple.getX(), apple.getY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      
       gc.setFill(Constants.SNAKE_COLOR);
-      gc.drawImage(Constants.pikachu, posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-      //gc.fillRect(posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      
+      for( Block b : snake )
+         //gc.drawImage(Constants.pikachu, posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+         gc.fillRect(b.getX(), b.getY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
    }
    
    class Timer extends AnimationTimer
@@ -72,10 +106,10 @@ public class App extends Application
       public void handle(long now)
       {
          //handle method is invoked on every computational frame
-         if( now-last > 1*dt )
+         if( now-last > 3*dt )
          {
-            direction();
-            moveSquare();
+            updateSnake();
+            paintSnake();
             last = now;
          }
       }
