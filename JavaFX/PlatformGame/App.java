@@ -18,23 +18,26 @@ public class App extends Application
    
    Group g = new Group(canvas);              //A Group is a Parent
    Scene scene = new Scene(g);         //doesn't have a zero-arg constructor
-   KeyHandler handleKey = new KeyHandler();
+   KeyPressedHandler pressKey = new KeyPressedHandler();
+   KeyReleasedHandler releaseKey = new KeyReleasedHandler();
    Timer timer = new Timer();
    
-   String[] keys = new String[5];
+   String[] keys = new String[10];
    String key = "NULL";
+   boolean keyPressed = false;
    
    double posX = 100;
    double posY = 100;
-   double dx = 10;
-   double dy = 10;
+   double velX = 0;
+   double velY = 0;
    
    @Override
    public void start(Stage stage)
    {
       timer.start();
       initializeKeys();
-      scene.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
+      scene.setOnKeyPressed(pressKey);    //makes keyboard come to life, needs an EventHandler
+      scene.setOnKeyReleased(releaseKey);    //makes keyboard come to life, needs an EventHandler
       stage.setScene(scene);
       stage.show();
    }
@@ -50,9 +53,56 @@ public class App extends Application
       for( int i = keys.length-1; i > 0; i-- )
          keys[i] = keys[i-1];
          
-      keys[0] = key;
+      if( keyPressed )
+         keys[0] = key;
+      else
+         keys[0] = "NULL";
       
-      System.out.println( Arrays.toString(keys) );
+      //System.out.println( Arrays.toString(keys) );
+   }
+   
+   public void updateSpeed()
+   {
+      int i = 1;
+      if( keys[0].equals("RIGHT") )
+      {
+         while( i < keys.length && keys[i++].equals("RIGHT") )
+         {
+            velX+=2;
+         }
+      }else if( keys[0].equals("LEFT") )
+      {
+         while( i < keys.length && keys[i++].equals("LEFT") )
+         {
+            velX-=2;
+         }
+      }else if( keys[0].equals("NULL") )
+      {
+         while( i < keys.length && keys[i++].equals("NULL"))
+         {
+            if( velX > 0 ){
+               velX -= 1;
+               if( velX <= 0 )
+                  velX = 0;
+            }else if( velX < 0 ){
+               velX += 1;
+               if( velX >= 0 )
+                  velX = 0;
+            }
+         }
+      }
+      
+      if( velX >= 20 )
+         velX = 20;
+         
+      if( velX <= -20 )
+         velX = -20;
+     
+   }
+   
+   public void updatePosition()
+   {
+      posX += velX;
    }
    
    public void paintSquare()
@@ -64,10 +114,10 @@ public class App extends Application
       gc.fillRect(posX, posY, 10, 10);
    }
    
-   class KeyHandler implements EventHandler<KeyEvent>
+   class KeyPressedHandler implements EventHandler<KeyEvent>
    {
       @Override
-      public void handle(KeyEvent e)
+      public void handle(KeyEvent e)      //only invoked when there's a KeyEvent
       {
          String localKey = e.getCode().toString();
          
@@ -76,17 +126,24 @@ public class App extends Application
          
          switch( localKey )
          {
-            case "UP":
-            case "DOWN":
             case "LEFT":
             case "RIGHT":
-               key = localKey; break;
-            default:
-               key = "NULL";
+               key = localKey;
          }
+         keyPressed = true;
          //System.out.println( localKey + ", " + key );
       }
-   }//end KeyHandler
+   }//end KeyPressedHandler
+   
+   class KeyReleasedHandler implements EventHandler<KeyEvent>
+   {
+      @Override
+      public void handle(KeyEvent e)      //only invoked when there's a KeyEvent
+      {
+         keyPressed = false;
+      }
+   }//end KeyPressedHandler
+
    
    class Timer extends AnimationTimer
    {
@@ -95,10 +152,12 @@ public class App extends Application
       @Override
       public void handle(long now)
       {
-         updateKeys();
          //handle method is invoked on every computational frame
-         if( now-last > 10*dt )
+         if( now-last > 1*dt )
          {
+            updateKeys();
+            updateSpeed();
+            updatePosition();
             paintSquare();
             last = now;
          }
