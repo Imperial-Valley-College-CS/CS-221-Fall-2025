@@ -30,6 +30,8 @@ public class App extends Application
    double posY = 100;
    double velX = 0;
    double velY = 0;
+   double maxVelX = 30;
+   double delta_velX = 2;
    
    @Override
    public void start(Stage stage)
@@ -68,35 +70,35 @@ public class App extends Application
       {
          while( i < keys.length && keys[i++].equals("RIGHT") )
          {
-            velX+=2;
+            velX+=delta_velX;
          }
       }else if( keys[0].equals("LEFT") )
       {
          while( i < keys.length && keys[i++].equals("LEFT") )
          {
-            velX-=2;
+            velX-=delta_velX;
          }
       }else if( keys[0].equals("NULL") )
       {
          while( i < keys.length && keys[i++].equals("NULL"))
          {
             if( velX > 0 ){
-               velX -= 1;
+               velX -= delta_velX;
                if( velX <= 0 )
                   velX = 0;
             }else if( velX < 0 ){
-               velX += 1;
+               velX += delta_velX;
                if( velX >= 0 )
                   velX = 0;
             }
          }
       }
       
-      if( velX >= 20 )
-         velX = 20;
+      if( velX >= maxVelX )
+         velX = maxVelX;
          
-      if( velX <= -20 )
-         velX = -20;
+      if( velX <= -1*maxVelX )
+         velX = -1*maxVelX;
      
    }
    
@@ -128,9 +130,9 @@ public class App extends Application
          {
             case "LEFT":
             case "RIGHT":
-               key = localKey;
+               key = localKey;               
+               keyPressed = true;
          }
-         keyPressed = true;
          //System.out.println( localKey + ", " + key );
       }
    }//end KeyPressedHandler
