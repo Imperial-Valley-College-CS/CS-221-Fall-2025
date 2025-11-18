@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.animation.AnimationTimer;
+import java.util.Arrays;
 
 public class App extends Application
 {
@@ -20,6 +21,9 @@ public class App extends Application
    KeyHandler handleKey = new KeyHandler();
    Timer timer = new Timer();
    
+   String[] keys = new String[5];
+   String key = "NULL";
+   
    double posX = 100;
    double posY = 100;
    double dx = 10;
@@ -29,9 +33,26 @@ public class App extends Application
    public void start(Stage stage)
    {
       timer.start();
+      initializeKeys();
       scene.setOnKeyPressed(handleKey);    //makes keyboard come to life, needs an EventHandler
       stage.setScene(scene);
       stage.show();
+   }
+   
+   public void initializeKeys()
+   {
+      for( int i = 0; i < keys.length; i++ )
+         keys[i] = "NULL";
+   }
+   
+   public void updateKeys()
+   {
+      for( int i = keys.length-1; i > 0; i-- )
+         keys[i] = keys[i-1];
+         
+      keys[0] = key;
+      
+      System.out.println( Arrays.toString(keys) );
    }
    
    public void paintSquare()
@@ -48,19 +69,22 @@ public class App extends Application
       @Override
       public void handle(KeyEvent e)
       {
-         String key = e.getCode().toString();
+         String localKey = e.getCode().toString();
          
-         if( key.equals("ESCAPE") )
+         if( localKey.equals("ESCAPE") )
             System.exit(0);
-         else if( key.equals("RIGHT") )
-            posX += dx;
-         else if( key.equals("LEFT") )
-            posX -= dx;         
-         else if( key.equals("UP") )
-            posY -= dy;       
-         else if( key.equals("DOWN") )
-            posY += dy;
          
+         switch( localKey )
+         {
+            case "UP":
+            case "DOWN":
+            case "LEFT":
+            case "RIGHT":
+               key = localKey; break;
+            default:
+               key = "NULL";
+         }
+         //System.out.println( localKey + ", " + key );
       }
    }//end KeyHandler
    
@@ -71,8 +95,9 @@ public class App extends Application
       @Override
       public void handle(long now)
       {
+         updateKeys();
          //handle method is invoked on every computational frame
-         if( now-last > 1*dt )
+         if( now-last > 10*dt )
          {
             paintSquare();
             last = now;
