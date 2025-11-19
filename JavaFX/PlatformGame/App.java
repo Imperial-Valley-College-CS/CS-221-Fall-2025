@@ -30,7 +30,7 @@ public class App extends Application
    double posY = 100;
    double velX = 0;
    double velY = 0;
-   double maxVelX = 30;
+   double maxVelX = 20;
    double delta_velX = 2;
    
    @Override
@@ -84,12 +84,8 @@ public class App extends Application
          {
             if( velX > 0 ){
                velX -= delta_velX;
-               if( velX <= 0 )
-                  velX = 0;
             }else if( velX < 0 ){
                velX += delta_velX;
-               if( velX >= 0 )
-                  velX = 0;
             }
          }
       }

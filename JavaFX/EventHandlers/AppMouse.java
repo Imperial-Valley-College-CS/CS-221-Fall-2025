@@ -27,6 +27,8 @@ public class AppMouse extends Application
          double x = e.getX();
          double y = e.getY();
          
+         System.out.println( x + ", " + y);
+         
          if( x > 200 && y > 200 )
             System.exit(0);         
       }

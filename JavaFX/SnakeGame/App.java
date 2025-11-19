@@ -66,6 +66,9 @@ public class App extends Application
          case "RIGHT": newX += Constants.SNAKE_SIZE; break;
       }
       
+      if( newY > Constants.CANVAS_HEI )
+         System.exit(0);
+      
       Block newHead = new Block(newX, newY);
       snake.add(0, newHead);                 //add new head
       
@@ -91,11 +94,12 @@ public class App extends Application
       gc.setFill(Constants.APPLE_COLOR);
       gc.fillRect( apple.getX(), apple.getY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
       
-      gc.setFill(Constants.SNAKE_COLOR);
       
       for( Block b : snake )
-         //gc.drawImage(Constants.pikachu, posX, posY, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      {         
+         gc.setFill(b.getColor());
          gc.fillRect(b.getX(), b.getY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+      }
    }
    
    class Timer extends AnimationTimer
