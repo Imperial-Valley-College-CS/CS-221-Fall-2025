@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class AppButton extends Application
 {
@@ -17,10 +19,13 @@ public class AppButton extends Application
    Scene scene = new Scene(pane);       //doesn't have a zero-arg constructor
    ButtonHandler handleButton = new ButtonHandler();
    boolean circleTurn = false;
+   Image image = new Image("pikachu.png");
+   ImageView imageView = new ImageView(image);
    
    @Override
    public void start(Stage stage)
    {
+      a.setGraphic(imageView);
       pane.add( a, 0, 0 );
       pane.add( b, 1, 0 );
       pane.add( c, 2, 0 );
