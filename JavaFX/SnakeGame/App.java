@@ -105,12 +105,12 @@ public class App extends Application
    class Timer extends AnimationTimer
    {
       long last = 0;
-      long dt = 16000000;     //16 millions nanoseconds between frames
+      long dt = 16000000;     //16 millions nanoseconds between frames (0.016 seconds)
       @Override
       public void handle(long now)
       {
          //handle method is invoked on every computational frame
-         if( now-last > 3*dt )
+         if( now-last > 1*dt )
          {
             updateSnake();
             paintSnake();
