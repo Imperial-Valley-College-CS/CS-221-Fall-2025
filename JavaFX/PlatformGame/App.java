@@ -12,8 +12,9 @@ import java.util.Arrays;
 
 public class App extends Application
 {
-   
-   Canvas canvas = new Canvas(600, 400);
+   double CANVAS_WID = 1000;
+   double CANVAS_HEI = 600;
+   Canvas canvas = new Canvas(CANVAS_WID, CANVAS_HEI);
    GraphicsContext gc = canvas.getGraphicsContext2D();
    
    Group g = new Group(canvas);              //A Group is a Parent
@@ -25,11 +26,17 @@ public class App extends Application
    String[] keys = new String[10];
    String key = "NULL";
    boolean keyPressed = false;
+   boolean jumping = false;
+   boolean climbing = false;
    
+   
+   double floor = CANVAS_HEI - 50;
    double posX = 100;
-   double posY = 100;
+   double posY = floor;
    double velX = 0;
-   double velY = 0;
+   double velY = 8;
+   double maxHei = 80;
+   double yMax = maxHei;
    double maxVelX = 20;
    double delta_velX = 2;
    
@@ -65,30 +72,26 @@ public class App extends Application
    
    public void updateSpeed()
    {
-      int i = 1;
-      if( keys[0].equals("RIGHT") )
-      {
+      int i = 0;
+      int j = 0;
+      int k = 0;
          while( i < keys.length && keys[i++].equals("RIGHT") )
          {
             velX+=delta_velX;
          }
-      }else if( keys[0].equals("LEFT") )
-      {
-         while( i < keys.length && keys[i++].equals("LEFT") )
+         while( j < keys.length && keys[j++].equals("LEFT") )
          {
             velX-=delta_velX;
          }
-      }else if( keys[0].equals("NULL") )
-      {
-         while( i < keys.length && keys[i++].equals("NULL"))
+         while( k < keys.length && keys[k++].equals("NULL"))
          {
             if( velX > 0 ){
-               velX -= delta_velX;
+               velX -= 1;
             }else if( velX < 0 ){
-               velX += delta_velX;
+               velX += 1;
             }
          }
-      }
+      
       
       if( velX >= maxVelX )
          velX = maxVelX;
@@ -106,10 +109,24 @@ public class App extends Application
    public void paintSquare()
    {
       gc.setFill( Color.BLACK );
-      gc.fillRect(0,0, 600, 400);
+      gc.fillRect(0,0, CANVAS_WID, CANVAS_HEI);
       
       gc.setFill( Color.RED );
       gc.fillRect(posX, posY, 10, 10);
+   }
+   
+   public void jump()
+   {
+      if( climbing )
+         posY -= velY;  //will move up
+      else
+         posY += velY;  //will move down
+         
+      if( posY < yMax )
+         climbing = false;
+         
+      if( posY >= floor )
+         jumping = false;
    }
    
    class KeyPressedHandler implements EventHandler<KeyEvent>
@@ -121,6 +138,13 @@ public class App extends Application
          
          if( localKey.equals("ESCAPE") )
             System.exit(0);
+            
+         if( localKey.equals("SPACE") )
+         {
+            jumping = true;
+            climbing = true;
+            yMax = posY - maxHei;      //current posY minus max jump height
+         }
          
          switch( localKey )
          {
@@ -129,7 +153,7 @@ public class App extends Application
                key = localKey;               
                keyPressed = true;
          }
-         //System.out.println( localKey + ", " + key );
+         System.out.println( localKey + ", " + key );
       }
    }//end KeyPressedHandler
    
@@ -153,6 +177,8 @@ public class App extends Application
          //handle method is invoked on every computational frame
          if( now-last > 1*dt )
          {
+            if( jumping )
+               jump();
             updateKeys();
             updateSpeed();
             updatePosition();
